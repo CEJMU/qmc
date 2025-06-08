@@ -133,11 +133,9 @@ pub fn search_prime_implicants(bits: Vec<BitSet>) -> Vec<BitSet> {
     let mut primes = Vec::new();
 
     loop {
-        let mut groups = grouped;
-        let new_combinations = find_prime_implicants(&mut groups);
+        let candidates = find_prime_implicants(&mut grouped);
 
-        // Alle unbenutzten ursprünglichen BitSets sind Prime Implicants
-        for group in &groups {
+        for group in &grouped {
             for bitset in group {
                 if !bitset.used {
                     primes.push(bitset.clone());
@@ -145,11 +143,11 @@ pub fn search_prime_implicants(bits: Vec<BitSet>) -> Vec<BitSet> {
             }
         }
 
-        if new_combinations.is_empty() {
+        if candidates.is_empty() {
             break;
         }
 
-        grouped = sort_bits(&new_combinations);
+        grouped = sort_bits(&candidates);
     }
 
     primes
