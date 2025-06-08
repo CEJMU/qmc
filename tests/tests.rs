@@ -40,11 +40,11 @@ mod tests {
 
     #[test]
     fn test_compare_sets() {
-        let set_a = vec![BitSet {
+        let mut set_a = vec![BitSet {
             bits: vec![Bit::Zero, Bit::Zero],
             used: false,
         }];
-        let set_b = vec![
+        let mut set_b = vec![
             BitSet {
                 bits: vec![Bit::Zero, Bit::One],
                 used: false,
@@ -64,7 +64,7 @@ mod tests {
                 used: false,
             },
         ];
-        assert_eq!(compare_sets(&set_a, &set_b), Some(set_e));
+        assert_eq!(compare_sets(&mut set_a, &mut set_b), Some(set_e));
     }
 
     #[test]
@@ -76,9 +76,18 @@ mod tests {
         ];
 
         let expected = vec![
-            vec![Bit::Zero, Bit::Zero, Bit::Zero],
-            vec![Bit::Zero, Bit::Zero, Bit::One],
-            vec![Bit::One, Bit::Zero, Bit::Zero],
+            BitSet {
+                bits: vec![Bit::Zero, Bit::Zero, Bit::Zero],
+                used: false,
+            },
+            BitSet {
+                bits: vec![Bit::Zero, Bit::Zero, Bit::One],
+                used: false,
+            },
+            BitSet {
+                bits: vec![Bit::One, Bit::Zero, Bit::Zero],
+                used: false,
+            },
         ];
 
         assert_eq!(parse(&bits), expected);
@@ -87,10 +96,22 @@ mod tests {
     #[test]
     fn test_sort() {
         let bits = vec![
-            vec![Bit::Zero, Bit::Zero, Bit::One],  //
-            vec![Bit::Zero, Bit::Zero, Bit::Zero], //
-            vec![Bit::One, Bit::Zero, Bit::Zero],  //
-            vec![Bit::One, Bit::Zero, Bit::One],   //
+            BitSet {
+                bits: vec![Bit::Zero, Bit::Zero, Bit::One],
+                used: false,
+            }, //
+            BitSet {
+                bits: vec![Bit::Zero, Bit::Zero, Bit::Zero],
+                used: false,
+            }, //
+            BitSet {
+                bits: vec![Bit::One, Bit::Zero, Bit::Zero],
+                used: false,
+            }, //
+            BitSet {
+                bits: vec![Bit::One, Bit::Zero, Bit::One],
+                used: false,
+            }, //
         ];
 
         let expected = vec![
@@ -119,7 +140,7 @@ mod tests {
 
     #[test]
     fn test_find_prime_implicants() {
-        let bits = vec![
+        let mut bits = vec![
             vec![BitSet {
                 bits: vec![Bit::Zero, Bit::Zero],
                 used: false,
@@ -135,6 +156,6 @@ mod tests {
             used: false,
         }];
 
-        assert_eq!(find_prime_implicants(bits), expected);
+        assert_eq!(find_prime_implicants(&mut bits), expected);
     }
 }
