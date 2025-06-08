@@ -152,7 +152,5 @@ pub fn search_prime_implicants(bits: Vec<BitSet>) -> Vec<BitSet> {
         grouped = sort_bits(&new_combinations);
     }
 
-    // Duplikate entfernen
-    let unique: HashSet<_> = primes.into_iter().collect();
-    unique.into_iter().collect()
+    primes
 }
